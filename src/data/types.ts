@@ -1,5 +1,3 @@
-export type ProjectCategory = "siti" | "menu" | "webapp";
-
 export type ProjectKind = "Progetto personale" | "Progetto personale collaborativo";
 
 export interface ProjectImage {
@@ -11,41 +9,18 @@ export interface ProjectImage {
   height: number;
   /** Larghezze disponibili per srcset. */
   widths: number[];
-  /** "phone" = ritaglio di uno schermo mobile, mostrato più stretto. */
-  shape?: "wide" | "phone";
 }
 
 export interface Project {
   slug: string;
   title: string;
   kind: ProjectKind;
-  categories: ProjectCategory[];
-  /** Una riga: cosa è, per chi. */
-  tagline: string;
-  summary: string;
-  problem: string;
-  goal: string;
-  solution: string;
-  features: string[];
-  stack: string[];
-  /** Ruolo di Antonio, formulato in modo verificabile. */
-  role: string;
-  year: string;
-  cover: ProjectImage;
-  gallery: ProjectImage[];
-  notes: string[];
-  /** Testo precompilato per la CTA "Vuoi qualcosa di simile?". */
-  similarRequest: { type: string; message: string };
-}
-
-export interface Service {
-  id: string;
-  title: string;
-  lead: string;
-  forWho: string;
-  includes: string[];
-  agreeFirst: string[];
-  cta: string;
-  request: { type: string; message: string };
-  relatedProjects: string[];
+  /** Cosa è, in una frase. */
+  sentence: string;
+  /** Pochi tag tecnici. */
+  tags: string[];
+  /** Fino a 3 immagini: la prima è quella principale della card. */
+  images: ProjectImage[];
+  /** Nota breve e verificabile, solo se serve (es. lavoro in team). */
+  note?: string;
 }

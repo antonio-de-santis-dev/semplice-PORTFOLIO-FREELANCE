@@ -20,8 +20,10 @@ MAPPING = [
     ("COVER (7).png", "la-moro", "hero-mobile", STAGE),
     ("DESKTOP (2).png", "la-moro", "prenotazione-desktop", None),
     # ("FEATURES (1).png", "la-moro", "sezioni", None),  # escluso: contiene foto segnaposto (vedi docs/assets-mapping.md)
-    ("COVER (4).png", "menu-digitale", "cover", STAGE),
-    ("COVER (4).png", "menu-digitale", "mobile", (1236, 512, 1534, 1160)),
+    # MenuDigitale: lo screenshot originale mostra logo e icone non caricati. Si pubblicano solo
+    # ritagli che li escludono (piatti su desktop, lista piatti su mobile) finché non arriva uno nuovo.
+    ("COVER (4).png", "menu-digitale", "piatti-desktop", (315, 310, 1200, 1090)),
+    ("COVER (4).png", "menu-digitale", "piatti-mobile", (1250, 615, 1515, 1135)),
     ("COVER (6).png", "gymplanner", "cover", STAGE),
     ("COVER.png", "gymplanner", "editor-schede", STAGE),
     ("DESKTOP (1).png", "gymplanner", "progressi-desktop", None),

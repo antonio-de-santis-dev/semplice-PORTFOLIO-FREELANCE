@@ -1,5 +1,5 @@
 // Genera public/og-image.jpg (1200×630) e public/apple-touch-icon.png (180×180) con Playwright.
-// Uso: node scripts/brand-assets.mjs   (dopo `npm run images`)
+// Uso: node scripts/brand-assets.mjs   (dopo `npm run images` e scripts/build-photo.py)
 import { chromium } from "@playwright/test";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -8,8 +8,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const font = (pkg, file) => pathToFileURL(join(root, "node_modules/@fontsource-variable", pkg, "files", file)).href;
-const cover = pathToFileURL(join(root, "public/projects/la-moro/cover-800.webp")).href;
-const gym = pathToFileURL(join(root, "public/projects/gymplanner/cover-800.webp")).href;
+const photo = pathToFileURL(join(root, "public/profile/antonio-de-santis-400.webp")).href;
 
 const css = `
 @font-face { font-family: Display; src: url(${font("bricolage-grotesque", "bricolage-grotesque-latin-wght-normal.woff2")}); font-weight: 200 800; }
@@ -20,20 +19,19 @@ body { background: #0d0e0c; color: #eeeee6; font-family: Body; }
 `;
 
 const og = `<!doctype html><style>${css}
-.og { width: 1200px; height: 630px; padding: 64px; position: relative; overflow: hidden; }
-.og .mark { width: 64px; height: 64px; border-radius: 16px; font-size: 28px; }
-h1 { font-family: Display; font-weight: 640; font-size: 76px; line-height: .98; letter-spacing: -0.035em; margin-top: 48px; max-width: 620px; }
-h1 span { color: #c8f26d; }
-p { margin-top: 28px; font-size: 26px; color: #a9ac9f; }
-.shot { position: absolute; width: 520px; border-radius: 18px; overflow: hidden; background: #ece8df; box-shadow: 0 24px 48px -24px rgb(0 0 0 / .7); }
-.shot img { display: block; width: 100%; }
+.og { width: 1200px; height: 630px; padding: 72px; display: grid; grid-template-columns: 1fr 360px; gap: 64px; align-items: center; }
+h1 { font-family: Display; font-weight: 640; font-size: 78px; line-height: .98; letter-spacing: -0.035em; }
+p { margin-top: 28px; font-size: 30px; line-height: 1.3; color: #a9ac9f; max-width: 560px; }
+p strong { color: #c8f26d; font-weight: 600; }
+.photo { width: 360px; height: 450px; border-radius: 22px; overflow: hidden; }
+.photo img { width: 100%; height: 100%; object-fit: cover; object-position: 58% 30%; }
 </style>
 <div class="og">
-  <div class="mark">AD</div>
-  <h1>Siti, menu digitali <span>e web app.</span></h1>
-  <p>Antonio De Santis · Full Stack Web Developer</p>
-  <div class="shot" style="right:-40px; top:70px; transform: rotate(3deg)"><img src="${gym}"></div>
-  <div class="shot" style="right:60px; top:270px; transform: rotate(-2deg)"><img src="${cover}"></div>
+  <div>
+    <h1>Ciao, sono Antonio De Santis.</h1>
+    <p><strong>Full Stack Web Developer Junior.</strong> Landing page, siti web e applicazioni digitali su misura.</p>
+  </div>
+  <div class="photo"><img src="${photo}"></div>
 </div>`;
 
 const icon = `<!doctype html><style>${css} body{background:#c8f26d}</style>

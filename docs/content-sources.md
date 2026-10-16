@@ -33,10 +33,10 @@ Ricevuto solo `CV_antonio_de_santis.pdf`. L'attestato ITS non era tra gli allega
 | ITS Academy 2024–2026 | **Pubblicato** | il CV dice «frequentante» con fine 08/07/2026; il brief indica certificazione conclusa, 1.800 ore, 101/110 → usato il brief, **da verificare** sull'attestato |
 | Tirocinio developer presso Zerodd, dal 01/2026 | **Pubblicato** | presentato come tirocinio |
 | Esperienze da cameriere e rappresentante commerciale | **Pubblicato in forma sintetica** | senza nomi dei datori di lavoro (dati di terzi) |
-| Email, telefono, WhatsApp | **Da approvare** | `publicContact` in `src/data/site.ts` è `null` |
-| Profilo LinkedIn | **Da approvare** | non inserito |
+| Email, telefono, WhatsApp | **Da approvare** | `site.email` in `src/data/site.ts` è `null` |
+| Profilo LinkedIn | **Pubblicato** | approvato nel brief della landing |
 | Carta d'identità, indirizzo, luogo di nascita, CAP | **Vietato pubblicare** | assenti da sorgenti, bundle e build (test automatico) |
-| CV originale | **Vietato pubblicare** | non copiato nel progetto; esiste solo la bozza redatta in `drafts/` |
+| CV originale | **Vietato pubblicare** | non copiato nel progetto; la bozza redatta resta solo sul branch `main`; nella landing «CV disponibile su richiesta» |
 
 ## Profili pubblici
 Upwork e LinkedIn non sono stati consultati (richiedono login per i dettagli): tutti i contenuti

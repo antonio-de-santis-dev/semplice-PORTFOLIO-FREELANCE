@@ -8,3 +8,4 @@ qa-screens
 .DS_Store
 __pycache__
 *.tsbuildinfo
+qa-screens

@@ -1,9 +1,8 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { orderedProjects, projects } from "../src/data/projects";
-import { services } from "../src/data/services";
-import { publicContact } from "../src/data/site";
+import { projects } from "../src/data/projects";
+import { site } from "../src/data/site";
 
 const root = join(__dirname, "..");
 
@@ -14,9 +13,9 @@ function walk(dir: string): string[] {
   });
 }
 
-describe("contenuti dei progetti", () => {
-  it("contiene i 5 case study nell'ordine editoriale previsto", () => {
-    expect(orderedProjects.map((p) => p.slug)).toEqual(["la-moro", "menu-digitale", "gymplanner", "bollettalab", "boardroom"]);
+describe("lavori", () => {
+  it("contiene i 5 progetti nell'ordine richiesto", () => {
+    expect(projects.map((p) => p.slug)).toEqual(["la-moro", "menu-digitale", "gymplanner", "bollettalab", "boardroom"]);
   });
 
   it("etichetta correttamente progetti personali e collaborativi", () => {
@@ -25,10 +24,11 @@ describe("contenuti dei progetti", () => {
     }
   });
 
-  it("ogni immagine esiste in AVIF, WebP e JPEG", () => {
+  it("ha da 2 a 3 immagini per progetto, tutte presenti in AVIF, WebP e JPEG", () => {
     for (const p of projects) {
-      expect(p.gallery.length).toBeGreaterThan(0);
-      for (const img of [p.cover, ...p.gallery]) {
+      expect(p.images.length).toBeGreaterThanOrEqual(2);
+      expect(p.images.length).toBeLessThanOrEqual(3);
+      for (const img of p.images) {
         expect(img.alt.length).toBeGreaterThan(20);
         expect(existsSync(join(root, "public/projects", `${img.src}.jpg`))).toBe(true);
         for (const w of img.widths) {
@@ -39,9 +39,10 @@ describe("contenuti dei progetti", () => {
     }
   });
 
-  it("i servizi rimandano solo a progetti esistenti", () => {
-    const slugs = new Set(projects.map((p) => p.slug));
-    for (const s of services) for (const r of s.relatedProjects) expect(slugs.has(r)).toBe(true);
+  it("non usa lo screenshot di MenuDigitale con immagini rotte", () => {
+    const srcs = projects.flatMap((p) => p.images.map((i) => i.src));
+    expect(srcs).not.toContain("menu-digitale/cover");
+    expect(existsSync(join(root, "public/projects/menu-digitale/cover.jpg"))).toBe(false);
   });
 });
 
@@ -60,7 +61,8 @@ describe("vincoli di pubblicazione", () => {
     for (const f of files) for (const re of forbidden) expect(readFileSync(f, "utf8"), `${f} ${re}`).not.toMatch(re);
   });
 
-  it("i contatti personali restano disattivati finché non approvati", () => {
-    expect(publicContact).toEqual({ email: null, linkedin: null, cvUrl: null });
+  it("LinkedIn approvato, email non pubblicata senza consenso", () => {
+    expect(site.linkedin).toBe("https://www.linkedin.com/in/antonio-de-santis-740a27359/");
+    expect(site.email).toBeNull();
   });
 });

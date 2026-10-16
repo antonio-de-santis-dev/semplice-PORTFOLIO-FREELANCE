@@ -1,51 +1,46 @@
-# Portfolio · Antonio De Santis — Versione A (dark premium)
+# Antonio De Santis — landing personale (Versione A, dark premium)
 
-Sito portfolio per un Full Stack Web Developer freelance: Home, Servizi, Progetti con 5 case study,
-Chi sono, Contatti. React 18 + TypeScript + Vite, prerender statico di ogni pagina per SEO.
+Una sola pagina (`/`) da condividere nelle email di presentazione: hero con foto, chi sono,
+5 lavori con screenshot reali e lightbox, esperienze, competenze, LinkedIn.
+React 18 + TypeScript + Vite, prerenderizzata in HTML statico.
 
-> **Stato: anteprima da approvare.** Non pubblicato. Contatti personali e CV disattivati finché non
-> approvati (vedi «Prima della pubblicazione»).
+> **Stato:** in revisione sul branch `landing-page-semplificata`. La versione multipagina
+> precedente è intatta su `main`. Nessun deploy, nessun merge senza approvazione.
 
 ## Comandi
 
 ```bash
 npm install
-npm run dev        # sviluppo su http://localhost:5173
-npm run build      # typecheck + build client + prerender in dist/
-npm run preview    # serve dist/ su http://localhost:4173
+npm run dev        # http://localhost:5173
+npm run build      # typecheck + build + prerender in dist/
+npm run preview    # http://localhost:4173
 npm run lint
-npm test           # unit test (Vitest): contenuti, vincoli privacy/GitHub, form
-npm run test:e2e   # Playwright su 390, 768, 1440, 1920 px (avvia da sé il preview)
+npm test           # Vitest
+npm run test:e2e   # Playwright 390/768/1440/1920 px + axe
 ```
 
-Per un'anteprima non indicizzabile: `NOINDEX=1 npm run build`. Per l'URL definitivo:
-`SITE_URL=https://dominio.it npm run build` (canonical, Open Graph, sitemap).
+Produzione: `SITE_URL=https://tuodominio.it npm run build` (canonical, Open Graph, sitemap).
+Anteprima non indicizzabile: `NOINDEX=1 npm run build`.
 
-### Asset
-- `npm run images -- "<cartella mok up>" public/projects` rigenera AVIF/WebP/JPEG dagli originali
-  (gli originali non sono nel repository). Mapping in `docs/assets-mapping.md`.
-- `node scripts/brand-assets.mjs` rigenera `og-image.jpg` e `apple-touch-icon.png`.
-- `python3 -I scripts/cv-draft.py drafts/cv-pubblico-BOZZA.pdf` rigenera la bozza del CV redatto.
-
-## Dove modificare i contenuti
+## Dove modificare
 | Cosa | File |
 |---|---|
-| Case study, ordine dei progetti, filtri | `src/data/projects.ts` (`editorialOrder`) |
-| Servizi e CTA precompilate | `src/data/services.ts` |
-| Biografia, timeline, stack | `src/data/profile.ts` |
-| Email, LinkedIn, CV, URL del sito | `src/data/site.ts` (`publicContact`, `site.url`) |
-| Titoli e descrizioni SEO | `src/data/meta.ts` |
-| Colori, font, spaziature, motion | `src/styles/tokens.css` · regole in `docs/DESIGN.md` |
+| Testi della pagina | `src/App.tsx` |
+| Lavori (ordine, frasi, tag, immagini) | `src/data/projects.ts` |
+| Timeline e competenze | `src/data/profile.ts` |
+| LinkedIn, email (solo se approvata), titolo e descrizione SEO | `src/data/site.ts` |
+| Colori, font, spazi | `src/styles/tokens.css` · `docs/DESIGN.md` |
 
-## Prima della pubblicazione (serve la tua approvazione)
-1. Email pubblica (e se vuoi LinkedIn) in `publicContact`: senza email il modulo dichiara che l'invio
-   non è attivo, senza simulare successi.
-2. CV: rivedere `drafts/cv-pubblico-BOZZA.pdf`; se approvato copiarlo in `public/cv/` e impostare `cvUrl`.
-3. Confermare il ruolo in BoardRoom e i dati ITS (1.800 ore, 101/110).
-4. Sostituire gli screenshot di MenuDigitale (immagini rotte) e, se possibile, aggiungerne per BollettaLAB.
-5. Dominio e hosting statico (qualsiasi host che serva `dist/`, con `404.html` come pagina d'errore).
+## Asset
+- Screenshot: `npm run images -- "<cartella mok up>" public/projects` (mapping: `docs/assets-mapping.md`).
+- Foto: `python3 -I scripts/build-photo.py <foto> public/profile` (solo ridimensionamento/compressione).
+- Anteprima social e icona: `node scripts/brand-assets.mjs`.
 
-## Documentazione
-`docs/DESIGN.md` · `docs/skill-audit.md` · `docs/assets-mapping.md` · `docs/content-sources.md` · `docs/qa-report.md`
+## Da confermare prima della pubblicazione
+1. Email pubblica (oggi non mostrata).
+2. Dati ITS (1.800 ore, 101/110) e stato attuale del tirocinio Zerodd.
+3. Screenshot nuovo di MenuDigitale; foto profilo in risoluzione più alta, se disponibile.
+4. Dominio/hosting e `SITE_URL`.
 
-Nessun cookie, tracker o servizio esterno a runtime; font self-hosted (SIL OFL).
+Documentazione: `docs/DESIGN.md`, `docs/qa-report.md`, `docs/assets-mapping.md`,
+`docs/content-sources.md`, `docs/skill-audit.md`. Nessun cookie, tracker o backend.
